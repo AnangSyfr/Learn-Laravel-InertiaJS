@@ -1,10 +1,12 @@
 import React from "react";
-
 import Layout from "../../Layouts/Default";
-
 import { Link } from "@inertiajs/inertia-react";
+import { Inertia } from "@inertiajs/inertia";
 
 const PostIndex = ({ posts, session }) => {
+    const handleDelete = async (id) => {
+        Inertia.delete(`/posts/${id}`);
+    };
     return (
         <Layout>
             <div style={{ marginTop: "100px" }}>
@@ -36,7 +38,22 @@ const PostIndex = ({ posts, session }) => {
                                     <tr key={index}>
                                         <td>{post.title}</td>
                                         <td>{post.content}</td>
-                                        <td className="text-center"></td>
+                                        <td className="text-center">
+                                            <Link
+                                                href={`/posts/${post.id}/edit`}
+                                                className="btn btn-sm btn-primary me-2"
+                                            >
+                                                EDIT
+                                            </Link>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(post.id)
+                                                }
+                                                className="btn btn-sm btn-danger"
+                                            >
+                                                DELETE
+                                            </button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
